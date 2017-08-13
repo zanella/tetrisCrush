@@ -294,8 +294,8 @@ public class TetrisCrush extends JPanel {
 
         return ret;
     }
-
     ///////////////////////////////////////////////////////////////////////////
+
     @Override
     public void paintComponent(Graphics g) {
         { // Paint the well
@@ -323,12 +323,17 @@ public class TetrisCrush extends JPanel {
         drawHighlighted(g);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    private boolean PAUSE = false;
+
     private void addKeyboardListeners() {
         f.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
             }
 
             public void keyPressed(KeyEvent e) {
+                if ((PAUSE) && (e.getKeyCode() != KeyEvent.VK_P)) { return; }
+
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:    rotate(-1);                 break;
                     case KeyEvent.VK_DOWN:  dropDown();     score += 1;   break;
@@ -365,8 +370,6 @@ public class TetrisCrush extends JPanel {
         });
     }
 
-    private boolean PAUSE = false;
-
     private void setupGameLoop() {
         addKeyboardListeners();
 
@@ -384,6 +387,7 @@ public class TetrisCrush extends JPanel {
             }
         }).start();
     }
+    ///////////////////////////////////////////////////////////////////////////
 
     private TetrisCrush() {
         f = new JFrame("TetrisCrush");
