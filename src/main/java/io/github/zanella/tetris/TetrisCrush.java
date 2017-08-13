@@ -1,4 +1,4 @@
-package tetris;
+package io.github.zanella.tetris;
 
 import com.google.common.collect.EvictingQueue;
 
@@ -10,12 +10,11 @@ import java.awt.event.MouseListener;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.swing.*;
 
 import static java.lang.Math.abs;
-import static tetris.Tetraminos.*;
+import static io.github.zanella.tetris.Tetraminos.*;
 
 public class TetrisCrush extends JPanel {
     private JFrame f;

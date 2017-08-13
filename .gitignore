@@ -1,3 +1,4 @@
 .idea/
 target/
 tetris_crush.iml
+dependency-reduced-pom.xml

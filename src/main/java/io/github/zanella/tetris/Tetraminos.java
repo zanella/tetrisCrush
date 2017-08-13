@@ -1,4 +1,4 @@
-package tetris;
+package io.github.zanella.tetris;
 
 import java.awt.*;
 import java.util.ArrayList;

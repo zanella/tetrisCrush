@@ -1,4 +1,4 @@
-package tetris;
+package io.github.zanella.tetris;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -8,7 +8,7 @@ import java.util.Collections;
 
 import javax.swing.*;
 
-import static tetris.Tetraminos.*;
+import static io.github.zanella.tetris.Tetraminos.*;
 
 public class Tetris extends JPanel {
     private Point pieceOrigin;
@@ -253,7 +253,7 @@ public class Tetris extends JPanel {
     }
 
     public static void main(String[] args) {
-        final JFrame f = new JFrame("tetris.Tetris");
+        final JFrame f = new JFrame("main.java.io.github.zanella.tetris.Tetris");
 
         final Dimension dimension = new Dimension(WIDTH, HEIGHT);
 
