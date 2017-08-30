@@ -7,8 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
@@ -28,17 +27,7 @@ public class TetrisCrush extends JPanel {
     private final int COLUMNS, ROWS;
 
     private void init() { // Creates a border around the well and initializes the dropping piece
-        well = new Color[COLUMNS][ROWS];
-
-        for (int i = 0; i < COLUMNS; i++) {
-            for (int j = 0; j < ROWS; j++) {
-                if (i == 0 || i == (COLUMNS - 1) || j == (ROWS - 1)) {
-                    well[i][j] = Color.GRAY;
-                } else {
-                    well[i][j] = Color.BLACK;
-                }
-            }
-        }
+       reset();
 
         newPiece();
 
@@ -52,22 +41,35 @@ public class TetrisCrush extends JPanel {
     }
 
     private boolean collidesAt(int x, int y) { // Collision test for the dropping piece
-        for (Point p : currentPiece.points.get(currentPiece.rotation)) {
-            if (well[p.x + x][p.y + y] != Color.BLACK) {
-                return true;
+        //System.out.println("rotation: " + currentPiece.rotation);
+
+        try {
+            for (final Point p : currentPiece.points.get(Math.abs(currentPiece.rotation))) {
+                if (well[p.x + x][p.y + y] != Color.BLACK) {
+                    return true;
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return true;
         }
+
         return false;
     }
 
     private void rotate(int i) { // Rotates the piece clockwise or counterclockwise
+        if (currentPiece == null) { return; }
+
+        // TODO - mutex w/ dropDown()
+
         int newRotation = (currentPiece.rotation + i) % 4;
-        if (newRotation < 0) {
-            newRotation = 3;
+
+        final int prevRotation = currentPiece.rotation;
+        currentPiece.rotation = newRotation;
+
+        if (collidesAt(currentPiece.x, currentPiece.y)) {
+            currentPiece.rotation = prevRotation;
         }
-        if (!collidesAt(currentPiece.x, currentPiece.y)) {
-            currentPiece.rotation = newRotation;
-        }
+
         repaint();
     }
 
@@ -103,10 +105,13 @@ public class TetrisCrush extends JPanel {
      * It's actually pretty ingenious, it doesn't need to redraw the squares in the "well"
      */
     private void fixToWell() {
-        for (int i = 0; i < currentPiece.points.get(currentPiece.rotation).size(); i++) {
-            final Point p = currentPiece.points.get(currentPiece.rotation).get(i);
+        final Tetramino cp = currentPiece;
+        currentPiece = null;
 
-            well[currentPiece.x + p.x][currentPiece.y + p.y] = currentPiece.pointsColor.get(i);
+        for (int i = 0; i < cp.points.get(Math.abs(cp.rotation)).size(); i++) {
+            final Point p = cp.points.get(Math.abs(cp.rotation)).get(i);
+
+            well[cp.x + p.x][cp.y + p.y] = cp.pointsColor.get(i);
         }
 
         clearRows();
@@ -123,6 +128,21 @@ public class TetrisCrush extends JPanel {
         for (int j = row-1; j > 0; j--) {
             for (int i = 1; i < COLUMNS; i++) {
                 well[i][j+1] = well[i][j];
+            }
+        }
+    }
+
+    private void reset() {
+        score = 0;
+        well = new Color[COLUMNS][ROWS];
+
+        for (int i = 0; i < COLUMNS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                if (i == 0 || i == (COLUMNS - 1) || j == (ROWS - 1)) {
+                    well[i][j] = Color.GRAY;
+                } else {
+                    well[i][j] = Color.BLACK;
+                }
             }
         }
     }
@@ -173,7 +193,8 @@ public class TetrisCrush extends JPanel {
             g.setColor( currentPiece.pointsColor.get(i) );
             //System.out.println("color["+i+"]: " + c);
 
-            final Point p = currentPiece.points.get(currentPiece.rotation).get(i);
+            final Point p = currentPiece.points.get(
+                    Math.abs(currentPiece.rotation)).get(i);
             final int x = p.x + currentPiece.x;
             final int y = p.y + currentPiece.y;
 
@@ -207,7 +228,7 @@ public class TetrisCrush extends JPanel {
         final Point p = new Point((mouseX / SQUARE_SIDE_SIZE), (mouseY / SQUARE_SIDE_SIZE));
         final Color pc = well[p.x][p.y];
         System.out.println("mouse_x: " + mouseX + ", mouse_y: " + mouseY + " color: " + pc);
-        if ( Color.BLACK.equals(pc) ) { return; }
+        if (Color.BLACK.equals(pc) || Color.GRAY.equals(pc)) { return; }
 
         chosenSquares.add(p);
 
@@ -227,6 +248,8 @@ public class TetrisCrush extends JPanel {
                 if ( !clearMatches(a, aColor, b, bColor) ) {
                     well[a.x][a.y] = aColor;
                     well[b.x][b.y] = bColor;
+                } else {
+                    clearRows();
                 }
             }
         }
@@ -341,6 +364,7 @@ public class TetrisCrush extends JPanel {
                     case KeyEvent.VK_RIGHT: movePiece(+1);              break;
                     case KeyEvent.VK_SPACE: dropInstant();                break;
                     case KeyEvent.VK_P:     PAUSE = !PAUSE;               break;
+                    case KeyEvent.VK_R:     reset();                      break;
                     case KeyEvent.VK_ESCAPE:    System.exit(0);
                 }
             }

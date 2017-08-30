@@ -13,53 +13,52 @@ class Tetraminos {
 
     static final Point[][][] PIECES = {
             { // I-Piece
-                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(3, 1) },
-                    { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3) },
-                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(3, 1) },
-                    { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3) }
-            },
-
-            { // J-Piece
-
-                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(2, 0) },
-                    { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(2, 2) },
-                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(0, 2) },
-                    { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(0, 0) }
+                    { new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(3, 0) },
+                    { new Point(2, -2), new Point(2, -1), new Point(2, 0), new Point(2, 1) },
+                    { new Point(3, 0), new Point(2, 0), new Point(1, 0), new Point(0, 0) },
+                    { new Point(2, 1), new Point(2, 0), new Point(2, -1), new Point(2, -2) }
             },
 
             { // L-Piece
-                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(2, 2) },
-                    { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(0, 2) },
-                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(0, 0) },
-                    { new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(2, 0) }
+                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(2, 0) },
+                    { new Point(1, -1), new Point(1, 0), new Point(1, 1), new Point(2, 1) },
+                    { new Point(2, 0), new Point(1, 0), new Point(0, 0), new Point(0, 1) },
+                    { new Point(2, 1), new Point(2, 0), new Point(2, -1), new Point(1, -1) }
+            },
+
+            { // J-Piece
+                    { new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(2, 1) },
+                    { new Point(1, -1), new Point(1, 0), new Point(1, 1), new Point(0, 1) },
+                    { new Point(2, 1), new Point(1, 1), new Point(0, 1), new Point(0, 0) },
+                    { new Point(1, 1), new Point(1, 0), new Point(1, -1), new Point(2, -1) }
             },
 
             { // O-Piece
-                    { new Point(0, 0), new Point(0, 1), new Point(1, 0), new Point(1, 1) },
-                    { new Point(0, 0), new Point(0, 1), new Point(1, 0), new Point(1, 1) },
-                    { new Point(0, 0), new Point(0, 1), new Point(1, 0), new Point(1, 1) },
-                    { new Point(0, 0), new Point(0, 1), new Point(1, 0), new Point(1, 1) }
+                    { new Point(0, 0), new Point(1, 0), new Point(1, 1), new Point(0, 1) },
+                    { new Point(1, 0), new Point(1, 1), new Point(0, 1), new Point(0, 0) },
+                    { new Point(1, 1), new Point(0, 1), new Point(0, 0), new Point(1, 0) },
+                    { new Point(0, 1), new Point(0, 0), new Point(1, 0), new Point(1, 1) }
             },
 
             { // S-Piece
-                    { new Point(1, 0), new Point(2, 0), new Point(0, 1), new Point(1, 1) },
-                    { new Point(0, 0), new Point(0, 1), new Point(1, 1), new Point(1, 2) },
-                    { new Point(1, 0), new Point(2, 0), new Point(0, 1), new Point(1, 1) },
-                    { new Point(0, 0), new Point(0, 1), new Point(1, 1), new Point(1, 2) }
+                    { new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(-1, 1) },
+                    { new Point(1, 0), new Point(1, 1), new Point(0, 0), new Point(0, -1) },
+                    { new Point(0, 1), new Point(-1, 1), new Point(0, 0), new Point(1, 0) },
+                    { new Point(0, 0), new Point(0, -1), new Point(1, 0), new Point(1, 1) }
             },
 
             { // T-Piece
-                    { new Point(1, 0), new Point(0, 1), new Point(1, 1), new Point(2, 1) },
-                    { new Point(1, 0), new Point(0, 1), new Point(1, 1), new Point(1, 2) },
-                    { new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(1, 2) },
-                    { new Point(1, 0), new Point(1, 1), new Point(2, 1), new Point(1, 2) }
+                    { new Point(0, 0), new Point(-1, 0), new Point(1, 0), new Point(0, -1) },
+                    { new Point(0, 0), new Point(0, -1), new Point(0, 1), new Point(1, 0) },
+                    { new Point(0, 0), new Point(1, 0), new Point(-1, 0), new Point(0, 1) },
+                    { new Point(0, 0), new Point(0, 1), new Point(0, -1), new Point(-1, 0) }
             },
 
             { // Z-Piece
-                    { new Point(0, 0), new Point(1, 0), new Point(1, 1), new Point(2, 1) },
-                    { new Point(1, 0), new Point(0, 1), new Point(1, 1), new Point(0, 2) },
-                    { new Point(0, 0), new Point(1, 0), new Point(1, 1), new Point(2, 1) },
-                    { new Point(1, 0), new Point(0, 1), new Point(1, 1), new Point(0, 2) }
+                    { new Point(0, 0), new Point(1, 0), new Point(1, 1), new Point(2, 1)},
+                    { new Point(2, -1), new Point(2, 0), new Point(1, 0), new Point(1, 1)},
+                    { new Point(2, 1), new Point(1, 1), new Point(1, 0), new Point(0, 0)},
+                    { new Point(1, 1), new Point(1, 0), new Point(2, 0), new Point(2, -1)}
             }
     };
 
